@@ -1,0 +1,11 @@
+h1{
+    border-style:solid;
+    border-color:black;
+    border-width: 2;
+}
+
+h2{
+    border-style: solid;
+    border-color: red;
+    border-width: 2;
+}
