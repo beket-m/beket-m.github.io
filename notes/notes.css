@@ -1,0 +1,37 @@
+ol{
+    color:palevioletred;
+    font-size: 150%;
+}
+
+ul{
+    color:aquamarine;
+}
+
+p, h1, tr{
+    color:blue;
+}
+
+table{
+    background-color: aqua;
+    font-family: fantasy;
+    border-style: dotted;
+    border-color: blueviolet;
+}
+
+img:hover{
+    border-radius: 50%;
+    border-style: solid;
+    border-color: red;
+    border-width: 15px;
+}
+
+#test_table{
+    border-width: 15px
+}
+
+a:hover{
+    border-color: red;
+    border-radius: 50%;
+    border-width: 15px;
+    border-style: groove;
+}
