@@ -16,6 +16,7 @@ table{
     font-family: fantasy;
     border-style: dotted;
     border-color: blueviolet;
+    position: sticky;
 }
 
 img:hover{
@@ -34,4 +35,26 @@ a:hover{
     border-radius: 50%;
     border-width: 15px;
     border-style: groove;
+}
+
+/* element < class < id < inline styling */
+/* Normal rule type < animation rule type < !importance */
+
+div{
+    border-color: brown;
+    border-style: dashed;
+    padding: 30px;
+    margin: 30px;
+}
+
+#div1{
+    position: relative;
+    left:200px;
+}
+
+/* box positions
+static, relative, fixed, absolute, sticky */
+
+ol{
+    text-shadow: 1px 1px 2px black;
 }
