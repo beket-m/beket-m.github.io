@@ -1,0 +1,53 @@
+
+body{
+    margin: 0;
+}
+
+ul{
+    list-style: none;
+    display: flex;
+    background-color: black;
+    margin: 0;
+    padding: 10px;
+}
+
+li a{
+    text-decoration: none; 
+    /* gets rid of underline */
+    color: white;
+    padding: 10px 30px;
+    /* first:top/bottom, second:right/left */
+    /* font-family: "Sixtyfour Convergence", sans-serif; */
+    transition: color 1s, font-size 2s;
+    font-size: 16px;
+
+}
+
+li a:hover{
+    background-color: gray;
+    color: green;
+    font-size: 100px;
+}
+
+li a:active{
+    background-color: white;
+    color: black;
+}
+
+
+@media screen and (max-width: 1000px){
+    body{
+        background-color: lime;
+    }
+    ul{
+        flex-direction: column;   
+    }
+    li a{
+        width: 70;
+    }
+}
+
+@media screen and (min-width: 1000px){
+    
+}
+

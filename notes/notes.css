@@ -58,3 +58,12 @@ static, relative, fixed, absolute, sticky */
 ol{
     text-shadow: 1px 1px 2px black;
 }
+
+@media screen and (min-width: 1000px){
+    body{
+        background-color: darkgray;
+    }
+    p{
+        color:blanchedalmond;
+    }
+}

@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+    background-color: white;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.input-section {
+    margin-top: 30px;
+}
+
+input {
+    padding: 8px;
+    width: 200px;
+    font-size: 16px;
+}
+
+p {
+    font-size: 18px;
+    margin-top: 10px;
+    color: black;
+}
