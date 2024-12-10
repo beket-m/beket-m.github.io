@@ -8,9 +8,9 @@ let score = 0;
 let level = 1;
 let isGameOver = false;
 let enemyTargetX, enemyTargetY;
-let isCollisionEnabled = false; // Disable collision at the start
+let isCollisionEnabled = false; // Disable collision at the start so you don't automatically loose
 
-// Player movement controls
+// Player movement
 document.addEventListener('keydown', (e) => {
     if (isGameOver) return;
     
@@ -32,6 +32,8 @@ document.addEventListener('keydown', (e) => {
             if (playerRect.right < gameAreaRect.right) player.style.left = `${player.offsetLeft + step}px`;
             break;
     }
+
+    checkCollectibleCollision(); // Check for collectible collision on movement
 });
 
 // Set a random target position for the enemy within the game area
@@ -40,8 +42,8 @@ function setEnemyTarget() {
     enemyTargetY = Math.random() * (gameArea.clientHeight - enemy.clientHeight);
 }
 
-// Move the enemy smoothly toward its target position
-function moveEnemySmoothly() {
+// Move the enemy toward its target position
+function moveEnemy() {
     if (isGameOver) return;
 
     const speed = 1 + level * 0.5; // Increase speed slightly with each level
@@ -50,7 +52,7 @@ function moveEnemySmoothly() {
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     // If close enough to the target, set a new target
-    if (distance < 1) {
+    if (distance < 5) { // Adjusted threshold to avoid "freezing"
         setEnemyTarget();
     } else {
         // Move enemy a small step toward the target
@@ -60,13 +62,14 @@ function moveEnemySmoothly() {
 
     // Check collision only if collision is enabled
     if (isCollisionEnabled) {
-        checkCollision();
+        checkEnemyCollision();
     }
-    requestAnimationFrame(moveEnemySmoothly);
+
+    requestAnimationFrame(moveEnemy);
 }
 
 // Check for collision between player and enemy
-function checkCollision() {
+function checkEnemyCollision() {
     const playerRect = player.getBoundingClientRect();
     const enemyRect = enemy.getBoundingClientRect();
 
@@ -80,23 +83,40 @@ function checkCollision() {
     }
 }
 
-// Randomly generate collectible item
+// Generate collectible items randomly
 function generateCollectible() {
     const collectible = document.createElement('div');
     collectible.classList.add('collectible');
     collectible.style.width = '15px';
     collectible.style.height = '15px';
     collectible.style.position = 'absolute';
+    collectible.style.backgroundColor = 'gold';
+    collectible.style.borderRadius = '50%';
     collectible.style.top = `${Math.random() * (gameArea.clientHeight - 15)}px`;
     collectible.style.left = `${Math.random() * (gameArea.clientWidth - 15)}px`;
 
     gameArea.appendChild(collectible);
+}
 
-    collectible.addEventListener('click', () => {
-        score++;
-        scoreDisplay.innerText = score;
-        collectible.remove();
-        checkLevelUp();
+// Check for collision between player and collectible
+function checkCollectibleCollision() {
+    const collectibles = document.querySelectorAll('.collectible');
+    const playerRect = player.getBoundingClientRect();
+
+    collectibles.forEach((collectible) => {
+        const collectibleRect = collectible.getBoundingClientRect();
+
+        if (
+            playerRect.left < collectibleRect.right &&
+            playerRect.right > collectibleRect.left &&
+            playerRect.top < collectibleRect.bottom &&
+            playerRect.bottom > collectibleRect.top
+        ) {
+            score++;
+            scoreDisplay.innerText = score;
+            collectible.remove();
+            checkLevelUp();
+        }
     });
 }
 
@@ -118,6 +138,7 @@ function endGame(won) {
     isGameOver = true;
     messageDisplay.innerText = won ? 'You Won!' : 'You Lost!';
     clearInterval(collectibleInterval);
+    document.querySelectorAll('.collectible').forEach(c => c.remove());
 }
 
 // Game initialization
@@ -132,7 +153,7 @@ function startGame() {
     isCollisionEnabled = false;
 
     setEnemyTarget(); // Set initial target for the enemy
-    requestAnimationFrame(moveEnemySmoothly); // Start smooth enemy movement
+    requestAnimationFrame(moveEnemy); // Start enemy movement
     collectibleInterval = setInterval(generateCollectible, 2000);
 
     // Enable collision detection after a 2-second grace period
@@ -142,3 +163,4 @@ function startGame() {
 }
 
 startGame();
+
